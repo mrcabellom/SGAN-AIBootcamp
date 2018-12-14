@@ -1,4 +1,3 @@
-from __future__ import print_function, division
 import scipy
 
 from keras.datasets import mnist
@@ -205,27 +204,23 @@ class SRGAN():
 
         self.generator.save("saved_model/model.h5")
 
-    def eval_images(self, iterat):
+    def eval_images(self, iterat, batch_size=2):
 
         os.makedirs('images/%s' % self.dataset_name, exist_ok=True)
-        r, c = 2, 2
-        imgs_hr, imgs_lr = self.data_loader.load_data(batch_size=2, is_testing=True)
-        fake_hr = self.generator.predict(imgs_lr)
 
+        imgs_hr, imgs_lr = self.data_loader.load_data(batch_size=batch_size, is_testing=True)
+        fake_hr = self.generator.predict(imgs_lr)
+        number_images = imgs_hr.shape[0]
         imgs_lr = 0.5 * imgs_lr + 0.5
         fake_hr = 0.5 * fake_hr + 0.5
         imgs_hr = 0.5 * imgs_hr + 0.5
 
-        for i in range(r):
+        for i in range(number_images):
             fig = plt.figure()
             plt.imshow(fake_hr[i])
-            plt.axis('off')
             fig.savefig('images/%s/%d_hres%d.png' % (self.dataset_name, iterat, i), bbox_inches='tight')
-            plt.close()
-
-        for i in range(r):
             fig = plt.figure()
             plt.imshow(imgs_lr[i])
-            plt.axis('off')
             fig.savefig('images/%s/%d_lowres%d.png' % (self.dataset_name, iterat, i), bbox_inches='tight')
             plt.close()
+           

@@ -13,8 +13,7 @@ class DataLoader():
         
         path = glob('./datasets/%s/*' % (self.dataset_name))
 
-        batch_images = np.random.choice(path, size=batch_size)
-
+        batch_images = np.random.choice(path, size=batch_size) if batch_size else path
         imgs_hr = []
         imgs_lr = []
         for img_path in batch_images:
