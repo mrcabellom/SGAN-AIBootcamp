@@ -88,7 +88,7 @@ class SRGAN():
 
     def build_vgg(self):
 
-        vgg = VGG19(weights="imagenet")
+        vgg = VGG19(include_top=False,weights="imagenet", input_shape=(256,256,3))
         vgg.outputs = [vgg.layers[9].output]
         img = Input(shape=self.hr_shape)
         img_features = vgg(img)

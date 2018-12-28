@@ -1,6 +1,4 @@
-
 from model.srgan import SRGAN
-
 
 if __name__ == '__main__':
     gan = SRGAN(dataset='images_test')
